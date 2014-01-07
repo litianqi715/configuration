@@ -1,0 +1,4 @@
+configuration
+=============
+
+bash vim emacs
