@@ -34,7 +34,6 @@ echo "configurating Bash..."
     mv "$myBash" my.bashrc
     cat ./my.bashrc ~/my.bashrc >"$myBash"
     rm ~/my.bashrc
-fi
 echo "Bash done!!!"
 
 echo "All done!!!"

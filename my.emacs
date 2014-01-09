@@ -26,6 +26,9 @@
 ;;auto-indent
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key [return] 'newline-and-indent)
+;;filename-ido
+(ido-mode 1)
+;(require 'template-simple)
 
 ;;;;yasnippet cedet company-mode auto-complete
 ;1yasnippet
@@ -73,6 +76,29 @@
 )
 (global-set-key [(f9)] 'quick-c-compile)
 
+;;copy region or whole line
+(global-set-key "\M-w"
+    (lambda ()
+      (interactive)
+      (if mark-active
+          (kill-ring-save (region-beginning)
+                          (region-end))
+          (progn
+              (kill-ring-save (line-beginning-position)
+                              (line-end-position))
+              (message "copied line")))))
+;;kill region or whole line
+(global-set-key "\C-w"
+                (lambda ()
+                  (interactive)
+                  (if mark-active
+                      (kill-region (region-beginning)
+                                   (region-end))
+                    (progn
+                      (kill-region (line-beginning-position)
+                                   (line-end-position))
+                      (message "killed line")))))
+
 ;;auto-complete-right-paren
 (defun auto-pair ()
    (interactive)
@@ -117,6 +143,7 @@
 (setq comint-completion-addsuffix '("/" . ""))
 (setq-default indent-tabs-mode nil)
 
+;;--------- Perl mode ------;;
 ;; specific-for-cperl
 (defun pde-perl-mode-hook ()
     (abbrev-mode t)
@@ -135,15 +162,15 @@
 	 (cperl-merge-trailing-else                  . t)
 	 (cperl-tab-always-indent                    . t)))
 	(cperl-set-style "PDE"))
-;; default-cperl-mode
+;;default-cperl-mode
 (defalias 'perl-mode 'cperl-mode)
-;no-grammer-highlight
+;grammer-highlight
 (global-font-lock-mode 1)
 ;auto-pair
 (add-hook 'cperl-mode-hook 'auto-pair)
 (add-hook 'perl-mode-hook 'auto-pair)
 
-(set-face-foreground 'region "cyan")
-(set-face-background 'region "blue")
-(set-face-foreground 'secondary-selection "skyblue")
-(set-face-background 'secondary-selection "darkblue")
+;(set-face-foreground 'region "cyan")
+;(set-face-background 'region "blue")
+;(set-face-foreground 'secondary-selection "skyblue")
+;(set-face-background 'secondary-selection "darkblue")
