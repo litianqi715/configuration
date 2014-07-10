@@ -1,0 +1,10 @@
+xargs parallel tee
+m4
+yes
+cal
+env
+look
+cut paste join
+fmt
+ab
+strace

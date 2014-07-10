@@ -1,0 +1,178 @@
+*gtags-and-man-proto.txt*   For Vim version 7.0+    Last change: 140522 
+*gtags-and-man-proto*                 
+
+Name~
+    GTags And Man Proto ( *GAMP* )
+Description~
+    Lightweigth plugin for Linux man 2, 3 and GTags-powered prototype
+    completion.
+Version~
+    0.5
+Maintainer~
+    Sylvain Saubier ( ResponSyS ), saubiersylvain@gmail.com 
+
+========================================================================
+Contents~
++--------------+
+| |REQUIREMENTS| |
+| |FEATURES|     |
+| |USAGE|        |
+| |GTAGS|        |
+| |NOTES|        |
+| |SETTINGS|     |
+| |MAPPING|      |
++--------------+
+========================================================================
+>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+|REQUIREMENTS|
+*GAMP-requirements*
+
+    Mandatory~
+        * Linux-like OS with a shell and manpage system
+        * Vim 'laststatus' must be set to 2
+
+    Optional~
+        * GNU Global ( can be disabled using |g:GAMP_GTagsOff| )
+
+>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+|FEATURES|
+*GAMP-features*
+
+  * 3 modes:
+    * Complete function prototype in |completion-mode|
+    * Hint for function prototype in |statusline-mode|
+    * Do all of the above when using both modes
+  * Take definition from all the function manpages from section 2 and 3
+    ( system and library (including libc) calls )
+  * Take definition of any functions using GNU Global GTags system 
+    ( see |SETTINGS| )
+  * If not using Global GTags, there is no dependency
+  * Real-time updating and no maintenance requited if using |gtags.vim|
+    auto-update feature
+
+>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+|USAGE|
+*GAMP-usage*
+ 
+Before you start using it, you might want to tweak a few settings ( see
+|SETTINGS| ).
+
+  1. Get your cursor after or on a function name.
+  2. Execute one of the provided commands ( see |MAPPING| )
+  3. ???
+  4. Profit!
+
+In |completion-mode| >
+        printf ||                       /* "||" is the cursor */
+<    Becomes: >
+        print|f| ( {+const_char_pt_format+}, {+VA_Args+} )
+<    Use <C-j> to jump to next argument: >
+        printf ( ||, {+VA_Args+} )
+        printf ( "GAMP mark: %d/10"||, {+VA_Args+} )
+<    And again: >
+        printf ( "GAMP mark: %d/10", || )
+        printf ( "GAMP mark: %d/10", 10|| )
+<
+In |statusline-mode|: >
+        printf (const char *format, ...)
+<    Is displayed on statusline.
+Statusline is reset to original when file is written, when Vim insert
+mode ends or when you decide it ( see |MAPPING| ).
+
+>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+|GTAGS|
+*GAMP-gtags*
+
+Global is a very easy tag system to use, as well as easy to compile.
+Grab it here: ftp://ftp.gnu.org/pub/gnu/global/ ( the Ubuntu/Debian
+package is not up-to-date ).
+The |gtags.vim| plugin script integrates the GNU GLOBAL source code tag
+system with Vim: http://www.vim.org/scripts/script.php?script_id=893
+
+One command is needed to initialize it for your project: >
+    $ cd root/of/my/project
+    $ gtags [--verbose]
+<
+See: >
+    $ info global
+<for a complete help.
+
+>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+|NOTES|
+*GAMP-notes*
+
+  * Pointer symbol '*' is shown as "pt" in |completion-mode|         
+  * Variable list "..." is shown as "VA_Args" in |completion-mode|   
+  * All args are shown on one line so functions with very very high 
+    arity may need some formatting                                  
+  * Theorically supports C syntax-like languages ( C++, Java, PHP ) 
+    but it depends on your manpage library and on the language supported
+    by GNU Global
+  * Makes transparent use of @g register ( nothing modified though )
+
+>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+|SETTINGS|
+*GAMP-settings*
+
+|g:loaded_GAMP|
+    Give it a value to turn off GAMP
+|g:GAMP_Mode|
+    1 : completion mode ( see |completion-mode| )
+    2 : statusline mode ( see |statusline-mode| )( default )
+    3 : completion and statusline modes
+|g:GAMP_CharAfterFn|
+    String inserted between the function name and the parenthesis
+    ' ' : a space ( default )
+|g:GAMP_SpaceAroundArgs|
+    1 : put inner spaces around function parenthesis >
+        myFunc ( {+int_myArg+} )    /* GAMP_SpaceAroundArgs == 1 */
+        myFunc ({+int_myArg+})      /* GAMP_SpaceAroundArgs == 0 */
+<|g:GAMP_UnloadLoadedBuffer|
+    1 : buffer opened by GTags to look for function prototype is 
+        deleted ( with bdelete )
+|g:GAMP_StatusLineFmt|
+    Format string of the right part of statusline when GAMP is 
+    displaying a function prototype ( see 'statusline' )
+    "%=%l,%c    %f%m%h" : ( default )
+
+|g:GAMP_GTagsOff|
+    1 : turn off GTags-powered lookup
+
+*GAMP-settings-example*
+vimrc example:
+ >
+    let g:GAMP_GTagsOff = 0         " Use Global ( bc its awsome )
+    let g:GAMP_Mode = 3             " Completion and statusline modes
+    let g:GAMP_CharAfterFn = ' '    " Put a space before fn parenth.
+    let g:GAMP_SpaceAroundArgs = 1   
+    let g:GAMP_UnloadLoadedBuffer = 1
+<
+>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+|MAPPING|
+*GAMP-mapping*
+
+Note: "gm" obviously stands for "_G_tags and _M_an".
+
+<Leader>gm~
+    Complete a function / show hint in statusline depending on mode
+    Note: default mapping of <Leader> is the '\' key
+
+*GAMP-mapping-normal*
+In normal mode:
+    gmt~
+        Toggle GAMP statusline
+    gmc~
+        Complete a function / show hint in statusline depending on mode
+    gmh~
+        Show hint in statusline
+
+*GAMP-commands*
+Commands:
+    GAMPStatusLineToggle~
+        Toggle GAMP statusline
+    GAMPComplete~
+        Complete a function / show hint in statusline depending on mode
+
+=======================================================================
+Modeline is:
+ vim: set textwidth=73 expandtab tabstop=2 filetype=help:
