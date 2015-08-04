@@ -30,14 +30,19 @@
 (ido-mode 1)
 ;(require 'template-simple)
 
+;muse
+(setq load-path (add-to-list 'load-path "~/.emacs.d/plugins/muse"))
+(require 'muse-mode)
+(require 'muse-publish)
+(require 'muse-html)
+
 ;;;;yasnippet cedet company-mode auto-complete
 ;1yasnippet
-(add-to-list 'load-path
-	      "~/.emacs.d/plugins/yasnippet")
-(require 'yasnippet)
-(yas-global-mode 1)
+;(add-to-list 'load-path
+;	      "~/.emacs.d/plugins/yasnippet")
+;(require 'yasnippet)
+;(yas-global-mode 1)
 ;2cedet
-;;2.1make compile
 ;;2.2semantic
 (setq semanticdb-default-save-directory "~/.emacs.d/semanticdb")
 ;;(semantic-load-enable-code-helpers)
@@ -111,19 +116,11 @@
         (?\" _ "\"")))
    (setq skeleton-pair t)
    (local-set-key (kbd "(") 'skeleton-pair-insert-maybe)
-   (local-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+;   (local-set-key (kbd "{") 'skeleton-pair-insert-maybe)
    (local-set-key (kbd "'") 'skeleton-pair-insert-maybe)
    (local-set-key (kbd "[") 'skeleton-pair-insert-maybe)
    (local-set-key (kbd "\"") 'skeleton-pair-insert-maybe))
 
-;;abbrev
-;; M-SPC not available, window manager take it away
-(global-set-key (kbd "M-'") 'just-one-space)
-(global-set-key (kbd "C-M-=") 'pde-indent-dwim)
-;; nearest key to dabbrev-expand
-(global-set-key (kbd "M-;") 'hippie-expand)
-(global-set-key (kbd "C-;") 'comment-dwim)
-(global-set-key (kbd "C-c f") 'comint-dynamic-complete)
 
 (setq hippie-expand-try-functions-list
 	            '(try-expand-line
@@ -170,7 +167,3 @@
 (add-hook 'cperl-mode-hook 'auto-pair)
 (add-hook 'perl-mode-hook 'auto-pair)
 
-;(set-face-foreground 'region "cyan")
-;(set-face-background 'region "blue")
-;(set-face-foreground 'secondary-selection "skyblue")
-;(set-face-background 'secondary-selection "darkblue")

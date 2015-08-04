@@ -1,17 +1,8 @@
-"colorscheme torte
-"colorscheme murphy
-"colorscheme desert 
-"colorscheme desert 
-"colorscheme elflord
 colorscheme ron
 filetype plugin on
-""let g:FlymakerOn = 1
 " configure tags - add additional tags here or comment out not-used ones
 set tags+=~/.vim/tags/cpp
 set tags+=~/.vim/tags/code-complete-tags
-" set tags+=~/.vim/tags/gl
-" set tags+=~/.vim/tags/sdl
-" set tags+=~/.vim/tags/qt4
 " build tags of your own project with Ctrl-F12
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
@@ -178,6 +169,20 @@ func SetTitle()
 		call append(line(".")+8, "package org.litianqi.java;")
 		call append(line(".")+9, "")
 		call append(line(".")+10,"public class {}")
+	endif
+	if &filetype == 'htm'
+		call setline(1, "<html>") 
+		call append(line("."), "<body>") 
+		call append(line(".")+1, "") 
+		call append(line(".")+2, "</body>") 
+		call append(line(".")+3, "</html>") 
+	endif
+	if &filetype == 'php'
+		call setline(1, "<html>") 
+		call append(line("."), "<body>") 
+		call append(line(".")+1, "") 
+		call append(line(".")+2, "</body>") 
+		call append(line(".")+3, "</html>") 
 	endif
 	"新建文件后，自动定位到文件末尾
 	autocmd BufNewFile * normal G
