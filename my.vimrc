@@ -99,6 +99,12 @@ set autoindent
 " 为C程序提供自动缩进
 set smartindent
 set cindent
+set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
+if &term=="xterm"
+	set t_Co=8
+	set t_Sb=^[[4%dm
+	set t_Sf=^[[3%dm
+endif
 " 使回格键（backspace）正常处理indent, eol, start等
 set backspace=2
 " Tab键的宽度
@@ -139,7 +145,7 @@ func SetTitle()
 		call setline(1,"\// ".expand("%")." -- ") 
 		call append(line("."), "\// Author: litianqi") 
 		call append(line(".")+1, "\// Author: litianqi@litianqi.org")
-		call append(line(".")+2, "\// Visit http://litianqi.org")
+		call append(line(".")+2, "\// Visit http://litianqi.co")
 		call append(line(".")+3, "\// Created Time: ".strftime("%c"))
 		call append(line(".")+4, "\#include <iostream>") 
 		call append(line(".")+5, "using namespace std;")
@@ -150,7 +156,7 @@ func SetTitle()
 		call setline(1,"\// ".expand("%")." -- ") 
 		call append(line("."), "\// Author: litianqi") 
 		call append(line(".")+1, "\// Author: litianqi@litianqi.org")
-		call append(line(".")+2, "\// Visit http://litianqi.org")
+		call append(line(".")+2, "\// Visit http://litianqi.co")
 		call append(line(".")+3, "\// Created Time: ".strftime("%c"))
 		call append(line(".")+4, "#include<stdio.h>")
 		call append(line(".")+5, "int main () {")

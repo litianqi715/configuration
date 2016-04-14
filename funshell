@@ -1,10 +1,10 @@
-xargs parallel tee
+parallel
 m4
 yes
 cal
 env
 look
-cut paste join
+paste join
 fmt
 ab
 strace

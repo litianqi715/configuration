@@ -1,4 +1,7 @@
-configuration
+# configuration
 =============
+## bash
 
-bash vim emacs
+## vim
+
+## emacs
