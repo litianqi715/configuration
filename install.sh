@@ -22,26 +22,26 @@ echo "Bash done!!!"
 echo "configurating Vim..."
 if [ -f "$myVim" ]; then
     echo ".vimrc already exists.New configuration file will be appended to .vimrc header!"
-    mv $myVim my.vimrc
+    mv $myVim ~/my.vimrc
     cat ./my.vimrc ~/my.vimrc >"$myVim"
     rm ~/my.vimrc
 else
     cp ./my.vimrc ~/.vimrc
-	cp -r ./my.vim ~/.vim
 fi
+cp -r ./my.vim ~/.vim
 echo "Vim done!!!"
 
 # Emacs
 echo "configurating Emacs..."
 if [ -f "$myEmacs" ]; then
     echo ".emacs already exists.New configuration file will be appended to .emacs header!"
-    mv $myEmacs my.emacs
+    mv $myEmacs ~/my.emacs
     cat ./my.emacs ~/my.emacs >"$myEmacs"
     rm ~/my.emacs
 else
 	cp ./my.emacs ~/.emacs
-    cp -r ./my.emacs.d ~/.emacs.d
 fi
+cp -r ./my.emacs.d ~/.emacs.d
 echo "Emacs done!!!"
 
 

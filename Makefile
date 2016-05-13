@@ -24,4 +24,3 @@ emacs :
 	mv ~/.emacs.d ~/ori.emacs.d
 	cp my.emacs ~/.emacs
 	cp -r my.emacs.d ~/.emacs.d
-
